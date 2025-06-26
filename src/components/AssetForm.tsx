@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
 
 interface AssetFormProps {
   initialData?: any;
@@ -50,7 +49,7 @@ export const AssetForm = ({ initialData, onSubmit }: AssetFormProps) => {
             id="name"
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
-            placeholder="e.g., MacBook Pro 16\""
+            placeholder="e.g., MacBook Pro 16 inch"
             required
           />
         </div>
