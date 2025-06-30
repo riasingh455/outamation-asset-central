@@ -1,7 +1,5 @@
 
-import { Bell, Search, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -11,14 +9,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Menu, Bell, Search, Settings, LogOut, User } from "lucide-react";
 
 interface HeaderProps {
   currentUser: any;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
+  currency: string;
+  setCurrency: (currency: string) => void;
 }
 
-export const Header = ({ currentUser, sidebarOpen, setSidebarOpen }: HeaderProps) => {
+export const Header = ({ currentUser, sidebarOpen, setSidebarOpen, currency, setCurrency }: HeaderProps) => {
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -29,20 +37,32 @@ export const Header = ({ currentUser, sidebarOpen, setSidebarOpen }: HeaderProps
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="lg:hidden"
           >
-            {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Menu className="h-5 w-5" />
           </Button>
           
-          <div className="relative w-96 max-w-lg">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              type="search"
-              placeholder="Search assets, employees, or locations..."
-              className="pl-10 bg-gray-50 border-gray-200"
+          <div className="hidden md:flex items-center space-x-2 bg-gray-100 rounded-lg px-3 py-2">
+            <Search className="h-4 w-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search assets, users, or reports..."
+              className="bg-transparent border-none outline-none text-sm w-64"
             />
           </div>
         </div>
 
         <div className="flex items-center space-x-4">
+          {/* Currency Toggle */}
+          <Select value={currency} onValueChange={setCurrency}>
+            <SelectTrigger className="w-20">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              <SelectItem value="USD">USD</SelectItem>
+              <SelectItem value="INR">INR</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Notifications */}
           <Button variant="ghost" size="sm" className="relative">
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -50,12 +70,15 @@ export const Header = ({ currentUser, sidebarOpen, setSidebarOpen }: HeaderProps
             </span>
           </Button>
 
+          {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <Avatar className="h-8 w-8">
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                <Avatar className="h-10 w-10">
                   <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
-                  <AvatarFallback>{currentUser.name.split(' ').map((n: string) => n[0]).join('')}</AvatarFallback>
+                  <AvatarFallback>
+                    {currentUser.name.split(' ').map((n: string) => n[0]).join('')}
+                  </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -66,21 +89,24 @@ export const Header = ({ currentUser, sidebarOpen, setSidebarOpen }: HeaderProps
                   <p className="text-xs leading-none text-muted-foreground">
                     {currentUser.email}
                   </p>
-                  <p className="text-xs leading-none text-blue-600 capitalize">
-                    {currentUser.role.replace('_', ' ')}
+                  <p className="text-xs leading-none text-muted-foreground capitalize">
+                    {currentUser.role.replace('_', ' ')} • {currentUser.department}
                   </p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                Profile Settings
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                Preferences
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">
-                Log out
+              <DropdownMenuItem>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
