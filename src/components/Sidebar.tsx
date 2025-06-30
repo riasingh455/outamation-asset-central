@@ -3,10 +3,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
-  Laptop,
-  Monitor,
+  Package,
   Users,
-  DollarSign,
   FileBarChart,
   Settings,
   HelpCircle,
@@ -22,16 +20,13 @@ interface SidebarProps {
 
 const navigation = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "hardware", label: "Hardware Assets", icon: Laptop },
-  { id: "software", label: "Software & Licenses", icon: Monitor },
+  { id: "assets", label: "Assets", icon: Package },
   { id: "users", label: "User Management", icon: Users, adminOnly: true },
-  { id: "budget", label: "Budget Tracking", icon: DollarSign, adminOnly: true },
-  { id: "reports", label: "Reports & Audit", icon: FileBarChart },
+  { id: "reports", label: "Reports", icon: FileBarChart },
 ];
 
 export const Sidebar = ({ currentView, setCurrentView, currentUser, isOpen }: SidebarProps) => {
   const isAdmin = currentUser.role === "admin";
-  const isManager = currentUser.role === "admin" || currentUser.role === "it_manager";
 
   return (
     <div className={cn(
@@ -42,7 +37,7 @@ export const Sidebar = ({ currentView, setCurrentView, currentUser, isOpen }: Si
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <Laptop className="h-5 w-5 text-white" />
+            <Package className="h-5 w-5 text-white" />
           </div>
           {isOpen && (
             <div>
