@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
   Laptop,
-  Software,
+  Monitor,
   Users,
   DollarSign,
   FileBarChart,
@@ -23,7 +23,7 @@ interface SidebarProps {
 const navigation = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "hardware", label: "Hardware Assets", icon: Laptop },
-  { id: "software", label: "Software & Licenses", icon: Software },
+  { id: "software", label: "Software & Licenses", icon: Monitor },
   { id: "users", label: "User Management", icon: Users, adminOnly: true },
   { id: "budget", label: "Budget Tracking", icon: DollarSign, adminOnly: true },
   { id: "reports", label: "Reports & Audit", icon: FileBarChart },
